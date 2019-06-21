@@ -4,15 +4,43 @@ namespace App\Http\Controllers\Api;
 
 use App\Api\Course;
 use App\Api\CoursePeriod;
+use App\Api\CoursePeriodExchange;
 use App\Api\CoursePeriodUser;
 use App\Http\Controllers\Controller;
 
 class CourseController extends Controller
 {
+    public function list()
+    {
+        $result = Course::query()->select('id', 'title', 'level')->orderBy('sort')->get();
+
+        return success($result);
+    }
+
     public function periodList()
     {
-        $result = Course::query()->with('record:id,course_id,title,status,sort')->select('id',
-            'title')->first();
+        $id = $this->request->get('id');
+        $user_id = 1;
+        empty($id) && $id = Course::query()->orderBy('sort')->first()->value('id');
+        $result = Course::query()->where('id', $id)->with('record:id,course_id,title,sort,status')->select('id',
+            'title', 'introduce')->first();
+
+        $study_id = CoursePeriodUser::query()->where('user_id', $user_id)->where('course_id',
+            $id)->pluck('period_id')->toArray();
+        $exchange_id = CoursePeriodExchange::query()->where('user_id', $user_id)->where('course_id',
+            $id)->first();
+        $status = $exchange_id ? 1 : 0;
+
+        $result['record']->each(function ($item) use ($study_id, $status) {
+            $item['study_status'] = 0;
+            if ($item['status'] == 0) {
+                $item['status'] = $status;
+            }
+            if (in_array($item['id'], $study_id)) {
+                $item['study_status'] = 1;
+            }
+
+        });
 
         return success($result);
     }
@@ -26,6 +54,19 @@ class CourseController extends Controller
             'title', 'video')->first($id);
 
         return success($result);
+    }
+
+    public function exchange($id)
+    {
+        $this->validation([
+            'redeem_code' => 'required',
+        ]);
+        $user_id = 1;
+        $redeem_code = $this->request->get('redeem_code');
+        $info = CoursePeriodExchange::query()->where('course_id', $id)->where('user_id', $user_id)->where('redeem_code', $redeem_code)->first();
+
+        abort_if(empty($info), 422, '兑换码错误或不存在');
+        return success($info);
     }
 
     public function submitAnswers($id)

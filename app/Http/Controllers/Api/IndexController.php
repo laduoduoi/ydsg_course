@@ -9,11 +9,10 @@ class IndexController extends Controller
 {
     public function index()
     {
-        $banner_list = [];
-        $bannerList = Banner::query()->where('type', 'index')->with('record:id,banner_id,title,cover')->select('id',
-            'title')->first();
-        $bannerList && $banner_list = $bannerList['record'];
+        $list = Banner::query()->whereIn('type',
+            ['index', 'index_activity'])->with('record:id,banner_id,title,cover')->select('id',
+            'title', 'type')->get()->groupBy('type');
 
-        return success(['banner_list' => $banner_list]);
+        return success(['banner_list' => $list['index'][0]['record'], 'activity_list' => $list['index_activity'][0]['record']]);
     }
 }

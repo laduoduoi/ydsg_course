@@ -18,6 +18,8 @@
                                 <tr>
                                     <th>名称</th>
                                     <th>标识</th>
+                                    <th>学习级别</th>
+                                    <th>排序</th>
                                     <th>价格</th>
                                     <th>操作</th>
                                 </tr>
@@ -27,6 +29,8 @@
                                     <tr>
                                         <td>{{$list->id}}</td>
                                         <td>{{$list->title}}</td>
+                                        <td>{{$list->level}}</td>
+                                        <td>{{$list->sort}}</td>
                                         <td>{{$list->price}}</td>
                                         <td>
                                             <a href="{{ route('admin.period.list',$list->id) }}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> 课时列表 </a>

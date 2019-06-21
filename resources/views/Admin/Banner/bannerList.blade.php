@@ -16,9 +16,9 @@
                             <table class="table table-striped projects">
                                 <thead>
                                 <tr>
-                                    <th>名称</th>
+                                    <th>ID</th>
+                                    <th>模块</th>
                                     <th>标识</th>
-                                    <th>排序</th>
                                     <th>操作</th>
                                 </tr>
                                 </thead>

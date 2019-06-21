@@ -11,6 +11,8 @@ class Course extends Model
         'introduce',
         'video',
         'purchase_note',
-        'price'
+        'price',
+        'sort',
+        'level'
     ];
 }

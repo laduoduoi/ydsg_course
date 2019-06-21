@@ -86,14 +86,16 @@ class CourseController extends Controller
             'video' => 'required',
             'purchase_note' => 'required',
             'price' => 'required',
+            'level' => 'required',
         ], [
             'title.required' => '请填写课程标题',
             'introduce.required' => '请填写介绍',
             'video.required' => '请传入视频',
             'purchase_note.required' => '请填写购买须知',
             'price.required' => '请填写价格',
+            'level.required' => '请填写学习级别',
         ]);
-        $param = $this->getReqParams(['title', 'introduce', 'video', 'purchase_note', 'price']);
+        $param = $this->getReqParams(['title', 'introduce', 'video', 'purchase_note', 'price', 'sort', 'level']);
         return $param;
     }
 

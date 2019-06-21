@@ -19,8 +19,8 @@
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <select name="status" id="status">
-                                            <option value="0" @if($info['status'] == 0) selected @endif>试用</option>
-                                            <option value="1" @if($info['status'] == 1) selected @endif>锁定</option>
+                                            <option value="0" @if($info['status'] == 0) selected @endif>锁定</option>
+                                            <option value="1" @if($info['status'] == 1) selected @endif>试用</option>
                                         </select>
                                     </div>
                                 </div>

@@ -13,10 +13,14 @@ use Illuminate\Http\Request;
 |
 */
 // Route::group(['middleware' => ['auth.basic']],function () {
+    // 课程列表
+    Route::get('/course', 'CourseController@list');
     // 课程-课时列表
     Route::get('/course/period', 'CourseController@periodList');
     // 课时详细
     Route::get('/course/period/{id}', 'CourseController@periodReview');
+    // 兑换码激活
+    Route::post('/course/period/exchange/{id}', 'CourseController@exchange');
     // 提交答题结果
     Route::post('/course/period/{id}', 'CourseController@submitAnswers');
 

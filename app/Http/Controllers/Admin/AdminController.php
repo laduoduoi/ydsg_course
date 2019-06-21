@@ -50,7 +50,7 @@ class AdminController extends Controller
 
         $info = Admin::find($id);
 
-        return view('Admin.admin.edit', compact('info'));
+        return view('Admin.Admin.edit', compact('info'));
     }
 
     /**

@@ -20,6 +20,6 @@ class CoursePeriod extends Model
 
     public function getStatusTitleAttribute()
     {
-        return $this->attributes['status'] ? '锁定' : '试用';
+        return $this->attributes['status'] ? '试用' : '锁定';
     }
 }

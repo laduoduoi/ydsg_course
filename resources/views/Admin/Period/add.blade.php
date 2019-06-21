@@ -18,8 +18,8 @@
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="l_id">类型</label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <select name="status" id="status">
-                                            <option value="1">锁定</option>
-                                            <option value="0">试用</option>
+                                            <option value="0">锁定</option>
+                                            <option value="1">试用</option>
                                         </select>
                                     </div>
                                 </div>
