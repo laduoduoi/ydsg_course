@@ -8,24 +8,26 @@ use Illuminate\Http\Request;
 |--------------------------------------------------------------------------
 |
 | Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
+| routes are loaded by the RouteServiceProvider wisubmitAnswersthin a group which
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-// Route::group(['middleware' => ['auth.basic']],function () {
+ //Route::group(['middleware' => ['auth']],function () {
     // 课程列表
     Route::get('/course', 'CourseController@list');
     // 课程-课时列表
     Route::get('/course/period', 'CourseController@periodList');
     // 课时详细
-    Route::get('/course/period/{id}', 'CourseController@periodReview');
+    Route::get('/course/period/show', 'CourseController@periodReview');
     // 兑换码激活
-    Route::post('/course/period/exchange/{id}', 'CourseController@exchange');
+    Route::post('/course/period/exchange', 'CourseController@exchange');
+    // 课程购买
+    Route::get('/course/shop', 'CourseController@courseReview');
     // 提交答题结果
-    Route::post('/course/period/{id}', 'CourseController@submitAnswers');
+    Route::post('/course/period/answer', 'CourseController@submitAnswers');
 
     //订单列表
-    Route::any('/order/getlist', 'OrderController@getList');
+    /*Route::any('/order/getlist', 'OrderController@getList');
     Route::any('/order/delete', 'OrderController@delOrder');
 
     //订单详情
@@ -45,9 +47,9 @@ use Illuminate\Http\Request;
     Route::any('/cut/order/detail', 'CutOrderController@orderDetail');
     //支付
     Route::any('/cut/order/pay', 'CutOrderController@pay');
-    Route::any('/cut/order/address', 'CutOrderController@cutAddress');
+    Route::any('/cut/order/address', 'CutOrderController@cutAddress');*/
 
-// });
+ //});
 
 Route::any('/', 'IndexController@index');
 

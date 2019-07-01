@@ -53,7 +53,7 @@
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <a href="{{asset($info->video)}}" target="_blank">预览视频</a>
-                                        <input name="video" type="hidden" value="{{asset($info->cover)}}">
+                                        <input name="video" type="hidden" value="{{asset($info->video)}}">
                                         <input name="video_edit" type="file">
                                     </div>
                                 </div>
@@ -62,7 +62,7 @@
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <a href="{{asset($info->summary_video)}}" target="_blank">预览视频</a>
-                                        <input name="summary_video" type="hidden" value="{{asset($info->cover)}}">
+                                        <input name="summary_video" type="hidden" value="{{asset($info->summary_video)}}">
                                         <input name="summary_video_edit" type="file">
                                     </div>
                                 </div>
@@ -70,8 +70,9 @@
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lyric">歌词
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input class="form-control col-md-7 col-xs-12" name="lyric" id="lyric" value=""
-                                               type="text">
+                                        {{--<input class="form-control col-md-7 col-xs-12" name="lyric" id="lyric" value=""
+                                               type="text">--}}
+                                        <textarea id="editor_id" name="lyric" style="width:700px;height:300px;">{{$info->lyric}}</textarea>
                                     </div>
                                 </div>
                                 <input name="course_id" value="{{$info->course_id}}" type="hidden">
@@ -88,6 +89,7 @@
         </div>
     </div>
 @endsection
+@include('kindeditor::editor',['editor'=>'editor_id'])
 @section('javascript')
     <script src="{{asset('/js/previewImage.js') }}"></script>
 @endsection

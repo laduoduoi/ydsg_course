@@ -28,7 +28,7 @@ class CourseController extends Controller
         $study_id = CoursePeriodUser::query()->where('user_id', $user_id)->where('course_id',
             $id)->pluck('period_id')->toArray();
         $exchange_id = CoursePeriodExchange::query()->where('user_id', $user_id)->where('course_id',
-            $id)->first();
+            $id)->where('exchange_status',1)->first();
         $status = $exchange_id ? 1 : 0;
 
         $result['record']->each(function ($item) use ($study_id, $status) {
@@ -45,9 +45,13 @@ class CourseController extends Controller
         return success($result);
     }
 
-    public function periodReview($id)
+    public function periodReview()
     {
-        $result = CoursePeriod::query()->with([
+        $this->validation([
+			'period_id' => 'required',
+        ]);
+		$id = $this->request->get('period_id');
+		$result = CoursePeriod::query()->with([
             'record:id,period_id,title,sort,audio',
             'record.answer:id,title,question_id,status'
         ])->select('id',
@@ -56,22 +60,43 @@ class CourseController extends Controller
         return success($result);
     }
 
-    public function exchange($id)
+    public function exchange()
     {
         $this->validation([
             'redeem_code' => 'required',
+			'period_id' => 'required',
         ]);
         $user_id = 1;
         $redeem_code = $this->request->get('redeem_code');
-        $info = CoursePeriodExchange::query()->where('course_id', $id)->where('user_id', $user_id)->where('redeem_code', $redeem_code)->first();
+		$id = $this->request->get('period_id');
+        $result = CoursePeriodExchange::query()->where('course_id', $id)->where('user_id',
+            $user_id)->where('redeem_code', $redeem_code)->first();
+        abort_if($result['exchange_status'] == 1, 422, '该兑换码已被使用');
+        abort_if(empty($result), 422, '兑换码错误或不存在');
+        $result->exchange_status = 1;
+        $result->save();
+        return success();
+    }
 
-        abort_if(empty($info), 422, '兑换码错误或不存在');
-        return success($info);
+    public function courseReview($id)
+    {
+        $this->validation([
+			'course_id' => 'required',
+        ]);
+		$id = $this->request->get('course_id');
+		$result = Course::query()->select('id', 'title', 'introduce', 'video', 'purchase_note',
+            'price')->firstOrFail($id);
+
+        return success($result);
     }
 
     public function submitAnswers($id)
     {
-        CoursePeriodUser::updateOrCreate([
+        $this->validation([
+			'course_id' => 'required',
+        ]);
+		$id = $this->request->get('course_id');
+		CoursePeriodUser::updateOrCreate([
             'period_id' => $id,
             'user_id' => 1
         ], [

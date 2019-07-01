@@ -175,7 +175,7 @@ return [
         App\Providers\EventServiceProvider::class,
         // App\Providers\TelescopeServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
+        Chenhua\Kindeditor\KindeditorServiceProvider::class,
     ],
 
     /*

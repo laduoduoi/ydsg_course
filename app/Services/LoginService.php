@@ -16,25 +16,35 @@ class LoginService
     public function code2Session($code)
     {
         $app = Factory::miniProgram(config('wechat.mini_program.default'));
-
         $auth = $app->auth->session($code);
-        abort_if(isset($auth['errcode']), 422, 'code 已失效');
+
+        abort_if(isset($auth['errcode']), 422, 'code错误或已失效');
 
         // 检查用户是否
         $user = $auth['openid'] ? User::where('open_id', $auth['openid'])->first() : [];
         if ($user) {
+            // 生成token
+            $token = jwt_encode(['id' => $user['id'], 'nick_name' => $user['nick_name'], 'mobile' => $user['mobile']],
+                5184000, '9bd6c1ea65995ffe80ed39f0787c95ec');// key=ydsg_course md5
+
             // 记录状态
-            $user->last_time      = time();
-            $user->last_ip        = request()->ip();
+            $user->last_time = time();
+            $user->last_ip = request()->ip();
+            $user->api_token = $token;
             $user->save();
 
-            $user_data = ['id' => $user['id'], 'nick_name' => $user['nick_name'], 'mobile' => $user['mobile'], 'avatar_url' => $user['avatar_url']];
+            $user_data = [
+                'id' => $user['id'],
+                'nick_name' => $user['nick_name'],
+                'mobile' => $user['mobile'],
+                'avatar_url' => $user['avatar_url']
+            ];
 
-            // 生成token
-            $token = jwt_encode(['id' => $user['id'], 'nick_name' => $user['nick_name'], 'mobile' => $user['mobile']], 5184000, '9bd6c1ea65995ffe80ed39f0787c95ec');// key=ydsg_course md5
 
-            $auth ['token'] = $token;
-            $auth['user']   = $user_data;
+            //$token = json_encode($user_data);
+
+            $auth['token'] = $token;
+            $auth['user'] = $user_data;
 
         }
 
@@ -52,35 +62,50 @@ class LoginService
     public function wechatLogin($session_key, $iv, $encryptData)
     {
         $result = $this->decryptData($session_key, $iv, $encryptData);
-
+        //$result['openId'] = 'oVTXi5D7nXm6UpspdUu8ColXs95A11';
         // 检查用户是否存在
-        $user = User::where(['open_id' => $result['openId']])->select(['id', 'avatar_url', 'mobile', 'nick_name'])->first();
+        $user = User::where(['open_id' => $result['openId']])->select([
+            'id',
+            'avatar_url',
+            'mobile',
+            'nick_name'
+        ])->first();
+
 
         if (empty($user)) {
-            $data     = [
-                'nick_name'  => base64_encode($result['nickName']),
-                'mobile'     => $result['purePhoneNumber'],
+            $mobile = !empty($result) && isset($result['purePhoneNumber']) ? $result['purePhoneNumber'] : '';
+            $data = [
+                'nick_name' => base64_encode($result['nickName']),
+                'mobile' => $mobile,
+                'last_ip' => request()->ip(),
                 'last_time' => time(),
-                'avatar_url'    => $result['avatarUrl'], // 未更换默认头像
-                'open_id'=>$result['openId'],
-                'city'=>$result['city'],
-                'province'=>$result['province'],
-                'country'=>$result['country'],
-                'gender'=>$result['gender'],
+                'avatar_url' => $result['avatarUrl'], // 未更换默认头像
+                'open_id' => $result['openId'],
+                'city' => $result['city'],
+                'province' => $result['province'],
+                'country' => $result['country'],
+                'gender' => $result['gender'],
                 'language' => $result['language'],
+                'api_token'=>'',
             ];
 
             $user = User::create($data);
-        }else{
-            // 最近登录时间
-            $user->last_time = time();
-            $user->save();
         }
+        $token = jwt_encode(['id' => $user['id'], 'nick_name' => $user['nick_name'], 'mobile' => $user['mobile']],
+            5184000, '9bd6c1ea65995ffe80ed39f0787c95ec');// key=ydsg_course md5
 
-        $user_data = ['id' => $user['id'], 'nick_name' => $user['nick_name'], 'mobile' => $user['mobile'],  'avatar_url' => $user['avatar_url']];
+        // 记录状态
+        $user->last_time = time();
+        $user->last_ip = request()->ip();
+        $user->api_token = $token;
+        $user->save();
 
-        // 生成token
-        $token = jwt_encode(['id' => $user['id'], 'nick_name' => $user['nick_name'], 'mobile' => $user['mobile']], 5184000, '9bd6c1ea65995ffe80ed39f0787c95ec');
+        $user_data = [
+            'id' => $user['id'],
+            'nick_name' => base64_decode($user['nick_name']),
+            'mobile' => $user['mobile'],
+            'avatar_url' => $user['avatar_url']
+        ];
 
         return ['token' => $token, 'user' => $user_data];
     }
