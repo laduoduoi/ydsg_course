@@ -13,5 +13,6 @@
 
 Route::get('/', function () {
     return '悦读时光-课程';
+    // test
     //return view('welcome');
 });
