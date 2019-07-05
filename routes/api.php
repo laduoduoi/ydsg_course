@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 |
 */
  //Route::group(['middleware' => ['auth']],function () {
+    // 获取微信用户手机号
+    Route::any('/miniapp/mobile','AuthController@getUserMobile');
     // 课程列表
     Route::get('/course', 'CourseController@list');
     // 课程-课时列表
@@ -61,8 +63,7 @@ Route::any('/miniapp/notice','WeChatController@notice');
 Route::any('/miniapp/session','AuthController@miniappSession');
 // 登小程序录
 Route::any('/miniapp/login','AuthController@wechatLogin');
-// 获取微信用户数据
-Route::any('/miniapp/user','AuthController@wechatUserInfo');
+
 
 
 

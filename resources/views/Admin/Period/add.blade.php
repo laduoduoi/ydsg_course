@@ -59,8 +59,7 @@
                                 <div class="item form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lyric">歌词</label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input class="form-control col-md-7 col-xs-12" name="lyric" id="lyric" value=""
-                                               type="text">
+                                        <textarea id="editor_id" name="lyric" style="width:700px;height:300px;"></textarea>
                                     </div>
                                 </div>
                                 <input type="hidden" name="course_id" value="{{$id}}">

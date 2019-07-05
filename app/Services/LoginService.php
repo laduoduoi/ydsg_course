@@ -71,7 +71,6 @@ class LoginService
             'nick_name'
         ])->first();
 
-
         if (empty($user)) {
             $mobile = !empty($result) && isset($result['purePhoneNumber']) ? $result['purePhoneNumber'] : '';
             $data = [
@@ -111,16 +110,18 @@ class LoginService
     }
 
     /**
-     * 获取微信用户信息
+     * 获取微信用户手机号信息
      *
      * @param $session
      * @param $iv
      * @param $data
      * @return mixed
      */
-    public function wechatUserInfo($session, $iv, $data)
+    public function getUserMobile($session, $iv, $data)
     {
-        return $this->decryptData($session, $iv, $data);
+        $result = $this->decryptData($session, $iv, $data);
+        $user_id = $this->request->user()['id'];
+        User::where(['id'=>$user_id])->update(['mobile'=>$result['phoneNumber']]);
     }
 
     /**

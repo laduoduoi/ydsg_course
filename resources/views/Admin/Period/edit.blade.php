@@ -89,7 +89,6 @@
         </div>
     </div>
 @endsection
-@include('kindeditor::editor',['editor'=>'editor_id'])
 @section('javascript')
     <script src="{{asset('/js/previewImage.js') }}"></script>
 @endsection

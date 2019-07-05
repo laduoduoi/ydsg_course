@@ -50,18 +50,17 @@ class AuthController extends Controller
         $session_key = $this->request->get('session_key');
         $encrypted_data = $this->request->get('encrypted_data');
         $iv = $this->request->get('iv');
-        $openid = $this->request->get('openid');
 
-        return success($service->wechatLogin($session_key, $iv, $encrypted_data, $openid));
+        return success($service->wechatLogin($session_key, $iv, $encrypted_data));
     }
 
     /**
-     * 获取微信用户信息
+     * 获取微信用户手机号
      *
      * @param LoginService $service
      * @return \Illuminate\Http\Response
      */
-    public function wechatUserInfo(LoginService $service)
+    public function getUserMobile(LoginService $service)
     {
         // 数据校验
         $this->validation([
@@ -74,6 +73,6 @@ class AuthController extends Controller
         $encrypted_data = $this->request->get('encrypted_data');
         $iv = $this->request->get('iv');
 
-        return success($service->wechatUserInfo($session_key, $iv, $encrypted_data));
+        return success($service->getUserMobile($session_key, $iv, $encrypted_data));
     }
 }
