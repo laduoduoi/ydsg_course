@@ -15,7 +15,7 @@
                                   action="{{route('admin.period.update',$info->id)}}" enctype="multipart/form-data"
                                   method="post">
                                 <div class="item form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="l_id">类型
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="status">类型
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <select name="status" id="status">

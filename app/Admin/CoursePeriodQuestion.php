@@ -12,6 +12,18 @@ class CoursePeriodQuestion extends Model
         'video',
         'audio',
         'period_id',
-        'sort'
+        'sort',
+        'type'
     ];
+    protected $appends = ['type_title'];
+
+    public function getTypeTitleAttribute()
+    {
+        $type = [
+            0  => '答题',
+            1  => '跟读',
+            2  => '九宫格',
+        ];
+        return isset($this->attributes['type']) ? $type[$this->attributes['type']] ?? '' : '';
+    }
 }

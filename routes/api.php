@@ -12,9 +12,9 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
- //Route::group(['middleware' => ['auth']],function () {
+Route::group(['middleware' => ['auth']], function () {
     // 获取微信用户手机号
-    Route::any('/miniapp/mobile','AuthController@getUserMobile');
+    Route::any('/miniapp/mobile', 'AuthController@getUserMobile');
     // 课程列表
     Route::get('/course', 'CourseController@list');
     // 课程-课时列表
@@ -27,6 +27,10 @@ use Illuminate\Http\Request;
     Route::get('/course/shop', 'CourseController@courseReview');
     // 提交答题结果
     Route::post('/course/period/answer', 'CourseController@submitAnswers');
+
+    // 会员中心
+    //关于我们
+    Route::get('/user/about', 'UserController@about');
 
     //订单列表
     /*Route::any('/order/getlist', 'OrderController@getList');
@@ -51,18 +55,18 @@ use Illuminate\Http\Request;
     Route::any('/cut/order/pay', 'CutOrderController@pay');
     Route::any('/cut/order/address', 'CutOrderController@cutAddress');*/
 
- //});
+});
 
 Route::any('/', 'IndexController@index');
 
 // 微信回调地址
-Route::any('/miniapp/notice','WeChatController@notice');
+//Route::any('/miniapp/notice', 'WeChatController@notice');
 
 // 小程序授权登录
 // 获取sessionId
-Route::any('/miniapp/session','AuthController@miniappSession');
+Route::any('/miniapp/session', 'AuthController@miniappSession');
 // 登小程序录
-Route::any('/miniapp/login','AuthController@wechatLogin');
+Route::any('/miniapp/login', 'AuthController@wechatLogin');
 
 
 

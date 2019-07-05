@@ -63,7 +63,7 @@ class CoursePeriodQuestionController extends Controller
     public function update(Request $request, $id)
     {
         $param = $this->check($request);
-        $info = CoursePeriodQuestion::find($id);
+        //$info = CoursePeriodQuestion::find($id);
         if ($request->hasFile('video_edit') && $request->file('video_edit')->isValid()) {
             $storage_path = $request->file('video_edit')->store('public/course/period/video');
             $path = str_replace('public/course/period/video/', '', $storage_path);
@@ -81,8 +81,8 @@ class CoursePeriodQuestionController extends Controller
         }
         $result = CoursePeriodQuestion::query()->where('id', $id)->update($param);
         abort_if($result === false, 400, '更新失败');
-
-        return redirect()->route('admin.question.list');
+        $id = $param['period_id'];
+        return redirect()->route('admin.question.list', compact('id'));
     }
 
     //删除
@@ -102,15 +102,17 @@ class CoursePeriodQuestionController extends Controller
             'cover' => 'required',
             'video' => 'required',
             'audio' => 'required',
-            'period_id' => 'required'
+            'period_id' => 'required',
+            'type' => 'required'
         ], [
             'title.required' => '请填写课时标题',
             'cover.required' => '请传入封面图',
             'video.required' => '请传入视频',
             'audio.required' => '请传入总结视频',
-            'period_id.required' => '课时ID不正确'
+            'period_id.required' => '课时ID不正确',
+            'type.required' => '问题类型未选择'
         ]);
-        $param = $this->getReqParams(['title', 'cover', 'video', 'audio', 'period_id', 'sort']);
+        $param = $this->getReqParams(['title', 'cover', 'video', 'audio', 'period_id', 'sort', 'type']);
         return $param;
     }
 

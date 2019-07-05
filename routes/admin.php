@@ -57,6 +57,14 @@ Route::group(['middleware' => 'admin_auth'], function () {
     Route::get('/course/period/question/answer/edit/{id}','CoursePeriodQuestionAnswerController@edit')->name('admin.answer.edit');
     Route::post('/course/period/question/answer/update/{id}','CoursePeriodQuestionAnswerController@update')->name('admin.answer.update');
     Route::get('/course/period/question/answer/destroy/{id}','CoursePeriodQuestionAnswerController@destroy')->name('admin.answer.destroy');
+
+    // 关于我们管理
+    Route::get('/about/list','AboutController@list')->name('admin.about.list');
+    Route::get('/about/add','AboutController@add')->name('admin.about.add');
+    Route::post('/about/save','AboutController@save')->name('admin.about.save');
+    Route::get('/about/edit/{id}','AboutController@edit')->name('admin.about.edit');
+    Route::post('/about/update/{id}','AboutController@update')->name('admin.about.update');
+    Route::get('/about/destroy/{id}','AboutController@destroy')->name('admin.about.destroy');
 });
 
 

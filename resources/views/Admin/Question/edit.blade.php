@@ -11,12 +11,22 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_content">
-                            <form class="form-horizontal form-label-left" action="{{route('admin.course.update',$info->id)}}" enctype="multipart/form-data" method="post">
+                            <form class="form-horizontal form-label-left" action="{{route('admin.question.update',$info->id)}}" enctype="multipart/form-data" method="post">
                                 <div class="item form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="title">名称
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <input class="form-control col-md-7 col-xs-12" name="title" id="title" value="{{$info->title}}" required="required" type="text">
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="type">类型</label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <select name="type" id="type">
+                                            <option value="0"@if($info['type'] == 0) selected @endif>答题</option>
+                                            <option value="1"@if($info['type'] == 1) selected @endif>跟读</option>
+                                            <option value="2"@if($info['type'] == 2) selected @endif>九宫格</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="item form-group">
@@ -53,7 +63,7 @@
                                         <input name="audio_edit" type="file" >
                                     </div>
                                 </div>
-                                <input name="course_id" value="{{$info->course_id}}" type="hidden">
+                                <input name="period_id" value="{{$info->period_id}}" type="hidden">
                                 <div class="form-group">
                                     <div class="col-md-6 col-md-offset-3">
                                         <button id="send" type="submit" class="btn btn-success">确定</button>

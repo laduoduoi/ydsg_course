@@ -31,6 +31,12 @@
                             <li><a href="{{route('admin.course.list')}}">课程列表</a></li>
                         </ul>
                     </li>
+                    <li>
+                        <a><i class="fa fa-edit"></i>关于我们<span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="{{route('admin.about.list')}}">关于我们</a></li>
+                        </ul>
+                    </li>
 
                     <!--<li>
                         <a><i class="fa fa-edit"></i>行业方案 <span class="fa fa-chevron-down"></span></a>

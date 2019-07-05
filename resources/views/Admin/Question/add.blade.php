@@ -20,6 +20,16 @@
                                     </div>
                                 </div>
                                 <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="type">类型</label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <select name="type" id="type">
+                                            <option value="0">答题</option>
+                                            <option value="1">跟读</option>
+                                            <option value="2">九宫格</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="item form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="sort">排序</label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <input class="form-control col-md-7 col-xs-12" name="sort" id="sort" value="0"

@@ -52,7 +52,7 @@ class CourseController extends Controller
         ]);
         $id = $this->request->get('period_id');
         $result = CoursePeriod::query()->with([
-            'record:id,period_id,title,sort,audio',
+            'record:id,period_id,title,sort,audio,type',
             'record.answer:id,title,question_id,status'
         ])->select('id',
             'title', 'video')->first($id);
