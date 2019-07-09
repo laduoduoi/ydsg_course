@@ -29,11 +29,6 @@ class CoursePeriodQuestionController extends Controller
     public function save(Request $request)
     {
         $param = $this->check($request);
-        if ($request->hasFile('video') && $request->file('video')->isValid()) {
-            $storage_path = $request->file('video')->store('public/course/period/video');
-            $path = str_replace('public/course/period/video/', '', $storage_path);
-            $param['video'] = 'storage/course/period/video/' . $path;
-        }
         if ($request->hasFile('cover') && $request->file('cover')->isValid()) {
             $storage_path = $request->file('cover')->store('public/course/period/cover');
             $path = str_replace('public/course/period/cover/', '', $storage_path);
@@ -63,19 +58,13 @@ class CoursePeriodQuestionController extends Controller
     public function update(Request $request, $id)
     {
         $param = $this->check($request);
-        //$info = CoursePeriodQuestion::find($id);
-        if ($request->hasFile('video_edit') && $request->file('video_edit')->isValid()) {
-            $storage_path = $request->file('video_edit')->store('public/course/period/video');
-            $path = str_replace('public/course/period/video/', '', $storage_path);
-            $param['video'] = 'storage/course/period/video/' . $path;
-        }
         if ($request->hasFile('cover_edit') && $request->file('cover_edit')->isValid()) {
             $storage_path = $request->file('cover_edit')->store('public/course/period/cover');
             $path = str_replace('public/course/period/cover/', '', $storage_path);
             $param['cover'] = 'storage/course/period/cover/' . $path;
         }
-        if ($request->hasFile('audio') && $request->file('audio')->isValid()) {
-            $storage_path = $request->file('audio')->store('public/course/period/audio');
+        if ($request->hasFile('audio_edit') && $request->file('audio_edit')->isValid()) {
+            $storage_path = $request->file('audio_edit')->store('public/course/period/audio');
             $path = str_replace('public/course/period/audio/', '', $storage_path);
             $param['audio'] = 'storage/course/period/audio/' . $path;
         }
@@ -99,20 +88,16 @@ class CoursePeriodQuestionController extends Controller
     {
         $this->validate($request, [
             'title' => 'required',
-            'cover' => 'required',
-            'video' => 'required',
             'audio' => 'required',
             'period_id' => 'required',
             'type' => 'required'
         ], [
             'title.required' => '请填写课时标题',
-            'cover.required' => '请传入封面图',
-            'video.required' => '请传入视频',
             'audio.required' => '请传入总结视频',
             'period_id.required' => '课时ID不正确',
             'type.required' => '问题类型未选择'
         ]);
-        $param = $this->getReqParams(['title', 'cover', 'video', 'audio', 'period_id', 'sort', 'type']);
+        $param = $this->getReqParams(['title', 'cover', 'audio', 'period_id', 'sort', 'type']);
         return $param;
     }
 

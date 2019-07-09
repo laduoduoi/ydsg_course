@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Api\Course;
 use App\Api\CoursePeriod;
 use App\Api\CoursePeriodExchange;
+use App\Api\CoursePeriodQuestion;
 use App\Api\CoursePeriodUser;
 use App\Http\Controllers\Controller;
 
@@ -22,7 +23,8 @@ class CourseController extends Controller
         $id = $this->request->get('id');
         $user_id = $this->request->user()['id'] ?? 1;
         empty($id) && $id = Course::query()->orderBy('sort')->first()->value('id');
-        $result = Course::query()->where('id', $id)->with('record:id,course_id,title,sort,status')->select('id',
+        $result = Course::query()->where('id', $id)->with('record:id,course_id,title,sort,status',
+            'background:id,cover,course_id')->select('id',
             'title', 'introduce')->first();
 
         $study_id = CoursePeriodUser::query()->where('user_id', $user_id)->where('course_id',
@@ -45,21 +47,102 @@ class CourseController extends Controller
         return success($result);
     }
 
-    public function periodReview()
+    /**
+     * 看一看
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function periodLook()
     {
         $this->validation([
             'period_id' => 'required',
         ]);
         $id = $this->request->get('period_id');
-        $result = CoursePeriod::query()->with([
-            'record:id,period_id,title,sort,audio,type',
-            'record.answer:id,title,question_id,status'
-        ])->select('id',
-            'title', 'video')->first($id);
+        $result = CoursePeriod::query()->select('id', 'title', 'video')->first($id);
 
         return success($result);
     }
 
+    /**
+     * 玩一玩
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function periodPlay()
+    {
+        $this->validation([
+            'period_id' => 'required',
+        ]);
+        $id = $this->request->get('period_id');
+        $list = CoursePeriodQuestion::query()->with([
+            'answer:id,title,question_id,status,cover'
+        ])->where('period_id', $id)->select('id', 'title', 'type', 'cover', 'audio')->orderBy('sort')->get();
+        $temp = [];
+        foreach ($list as $key => $value) {
+            $temp[$key]['type'] = $value['type'];
+            $temp[$key]['title'] = $value['title'];
+            switch ($value['type']) {
+                case 0:// 答题
+                    $temp[$key]['cover'] = $value['cover'];
+                    $temp[$key]['audio'] = $value['audio'];
+                    $temp[$key]['answer'] = $this->formatList($value['answer'], 0);
+                    break;
+                case 1:// 跟读
+                    $temp[$key]['audio'] = $value['audio'];
+                    break;
+                case 2:// 九宫格
+                    $temp[$key]['cover'] = $value['cover'];
+                    $temp[$key]['audio'] = $value['audio'];
+                    $temp[$key]['answer'] = $this->formatList($value['answer'], 2);
+                    break;
+                default;
+            }
+        }
+
+        return success($temp);
+    }
+
+    private function formatList($list, $type)
+    {
+        $temp = [];
+        switch ($type) {
+            case 0:
+                foreach ($list as $key => $value) {
+                    $temp[$key]['title'] = $value['title'];
+                    $temp[$key]['status'] = $value['status'];
+                }
+                break;
+            case 2:
+                foreach ($list as $key => $value) {
+                    $temp[$key]['cover'] = $value['cover'];
+                    $temp[$key]['status'] = $value['status'];
+                }
+                break;
+        }
+        return $temp;
+    }
+
+    /**
+     * 唱一唱
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function periodSing()
+    {
+        $this->validation([
+            'period_id' => 'required',
+        ]);
+        $id = $this->request->get('period_id');
+        $result = CoursePeriod::query()->select('id', 'title', 'audio')->first($id);
+
+        return success($result);
+    }
+
+    /**
+     * 兑换码
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function exchange()
     {
         $this->validation([
@@ -78,6 +161,11 @@ class CourseController extends Controller
         return success();
     }
 
+    /**
+     * 购买须知
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function courseReview()
     {
         $this->validation([
@@ -90,6 +178,11 @@ class CourseController extends Controller
         return success($result);
     }
 
+    /**
+     * 提交学习进度
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function submitAnswers()
     {
         $this->validation([

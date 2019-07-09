@@ -38,10 +38,10 @@ class CoursePeriodController extends Controller
             $path = str_replace('public/course/period/cover/', '', $storage_path);
             $param['cover'] = 'storage/course/period/cover/' . $path;
         }
-        if ($request->hasFile('summary_video') && $request->file('summary_video')->isValid()) {
-            $storage_path = $request->file('summary_video')->store('public/course/period/video');
+        if ($request->hasFile('audio') && $request->file('audio')->isValid()) {
+            $storage_path = $request->file('audio')->store('public/course/period/video');
             $path = str_replace('public/course/period/video/', '', $storage_path);
-            $param['summary_video'] = 'storage/course/period/video/' . $path;
+            $param['audio'] = 'storage/course/period/video/' . $path;
         }
         CoursePeriod::create($param);
         $id = $param['course_id'];
@@ -73,10 +73,10 @@ class CoursePeriodController extends Controller
             $path = str_replace('public/course/period/cover/', '', $storage_path);
             $param['cover'] = 'storage/course/period/cover/' . $path;
         }
-        if ($request->hasFile('summary_video_edit') && $request->file('summary_video_edit')->isValid()) {
-            $storage_path = $request->file('summary_video_edit')->store('public/course/period/video');
+        if ($request->hasFile('audio_edit') && $request->file('audio_edit')->isValid()) {
+            $storage_path = $request->file('audio_edit')->store('public/course/period/video');
             $path = str_replace('public/course/period/video/', '', $storage_path);
-            $param['summary_video'] = 'storage/course/period/video/' . $path;
+            $param['audio'] = 'storage/course/period/video/' . $path;
         }
         $result = CoursePeriod::query()->where('id', $id)->update($param);
         abort_if($result === false, 400, '更新失败');
@@ -100,16 +100,16 @@ class CoursePeriodController extends Controller
             'title' => 'required',
             'cover' => 'required',
             'video' => 'required',
-            'summary_video' => 'required',
+            'audio' => 'required',
             'course_id' => 'required'
         ], [
             'title.required' => '请填写课时标题',
             'cover.required' => '请传入封面图',
-            'video.required' => '请传入视频',
-            'summary_video.required' => '请传入总结视频',
+            'video.required' => '请传入视频文件',
+            'audio.required' => '请传入音频文件',
             'course_id.required' => '课程ID不正确'
         ]);
-        $param = $this->getReqParams(['title', 'cover', 'video', 'summary_video', 'lyric', 'course_id', 'status','sort']);
+        $param = $this->getReqParams(['title', 'cover', 'video', 'audio', 'lyric', 'course_id', 'status','sort']);
         return $param;
     }
 

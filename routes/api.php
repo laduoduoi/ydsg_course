@@ -19,8 +19,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/course', 'CourseController@list');
     // 课程-课时列表
     Route::get('/course/period', 'CourseController@periodList');
-    // 课时详细
-    Route::get('/course/period/show', 'CourseController@periodReview');
+    // 课时-看一看
+    Route::get('/course/period/look', 'CourseController@periodLook');
+    // 课时-玩一玩
+    Route::get('/course/period/play', 'CourseController@periodPlay');
+    // 课时-唱一唱
+    Route::get('/course/period/sing', 'CourseController@periodSing');
     // 兑换码激活
     Route::post('/course/period/exchange', 'CourseController@exchange');
     // 课程购买

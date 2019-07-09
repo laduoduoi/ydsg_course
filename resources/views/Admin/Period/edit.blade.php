@@ -4,7 +4,7 @@
         <div class="">
             <div class="page-title">
                 <div class="title_left">
-                    <h3>修改课程</h3>
+                    <h3>修改课时</h3>
                 </div>
             </div>
             <div class="row">
@@ -44,35 +44,33 @@
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <img id="imgHeadPhoto" class="am-img-responsive" src="{{asset($info->cover)}}" alt=""/>
-                                        <input name="cover" type="hidden" value="{{asset($info->cover)}}">
+                                        <input name="cover" type="hidden" value="{{$info->cover}}">
                                         <input name="cover_edit" type="file" onchange="PreviewImage(this,'imgHeadPhoto','divPreview');">
                                     </div>
                                 </div>
                                 <div class="item form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="video">视频1
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="video">视频
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <a href="{{asset($info->video)}}" target="_blank">预览视频</a>
-                                        <input name="video" type="hidden" value="{{asset($info->video)}}">
+                                        <input name="video" type="hidden" value="{{$info->video}}">
                                         <input name="video_edit" type="file">
                                     </div>
                                 </div>
                                 <div class="item form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="summary_video">视频2
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="audio">音频
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <a href="{{asset($info->summary_video)}}" target="_blank">预览视频</a>
-                                        <input name="summary_video" type="hidden" value="{{asset($info->summary_video)}}">
-                                        <input name="summary_video_edit" type="file">
+                                        <a href="{{asset($info->audio)}}" target="_blank">下载查看音频视频</a>
+                                        <input name="audio" type="hidden" value="{{$info->audio}}">
+                                        <input name="audio_edit" type="file">
                                     </div>
                                 </div>
                                 <div class="item form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lyric">歌词
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        {{--<input class="form-control col-md-7 col-xs-12" name="lyric" id="lyric" value=""
-                                               type="text">--}}
-                                        <textarea id="editor_id" name="lyric" style="width:700px;height:300px;">{{$info->lyric}}</textarea>
+                                        <textarea id="lyric" name="lyric" style="width:700px;height:300px;">{{$info->lyric}}</textarea>
                                     </div>
                                 </div>
                                 <input name="course_id" value="{{$info->course_id}}" type="hidden">

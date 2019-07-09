@@ -4,7 +4,7 @@ namespace App\Api;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CoursePeriodQuestionAnswer extends Model
+class CourseBackground extends Model
 {
     public function getCoverAttribute($value)
     {

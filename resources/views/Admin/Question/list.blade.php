@@ -32,7 +32,7 @@
                                         <td>{{$list->id}}</td>
                                         <td>{{$list->title}}</td>
                                         <td>{{$list->type_title}}</td>
-                                        <td><img class="am-img-thumbnail am-img-bdrs" src="{{asset($list->cover)}}" alt="{{$list->title}}" height="100px"/></td>
+                                        <td>@if(!empty($list->cover))<img class="am-img-thumbnail am-img-bdrs" src="{{asset($list->cover)}}" alt="{{$list->title}}" height="100px"/>@endif</td>
                                         <td>
                                             <a href="{{ route('admin.answer.list',$list->id) }}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> 答案管理 </a>
                                             <a href="{{ route('admin.question.edit',$list->id) }}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> 编辑 </a>

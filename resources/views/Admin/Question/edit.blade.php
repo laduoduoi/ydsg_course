@@ -40,18 +40,9 @@
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="cover">封面图
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <img  id="imgHeadPhoto" class="am-img-responsive" src="{{asset($info->cover)}}" alt=""/>
-                                        <input name="cover" type="hidden" value="{{asset($info->cover)}}">
+                                        @if(!empty($info->cover))<img  id="imgHeadPhoto" class="am-img-responsive" src="{{asset($info->cover)}}" alt=""/>@else<img  id="imgHeadPhoto" class="am-img-responsive" src="" alt=""/>@endif
+                                        <input name="cover" type="hidden" value="{{$info->cover}}">
                                         <input name="cover_edit" type="file" onchange="PreviewImage(this,'imgHeadPhoto','divPreview');" >
-                                    </div>
-                                </div>
-                                <div class="item form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="video">视频
-                                    </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <a href="{{asset($info->video)}}" target="_blank">预览视频</a>
-                                        <input name="video" type="hidden" value="{{asset($info->video)}}">
-                                        <input name="video_edit" type="file" >
                                     </div>
                                 </div>
                                 <div class="item form-group">

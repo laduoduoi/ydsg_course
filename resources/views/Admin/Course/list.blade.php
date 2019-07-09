@@ -21,6 +21,7 @@
                                     <th>学习级别</th>
                                     <th>排序</th>
                                     <th>价格</th>
+                                    <th>课程相关</th>
                                     <th>操作</th>
                                 </tr>
                                 </thead>
@@ -34,6 +35,9 @@
                                         <td>{{$list->price}}</td>
                                         <td>
                                             <a href="{{ route('admin.period.list',$list->id) }}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> 课时列表 </a>
+                                            <a href="{{ route('admin.background.list',$list->id) }}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> 背景图片管理 </a>
+                                        </td>
+                                        <td>
                                             <a href="{{ route('admin.course.edit',$list->id) }}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> 编辑 </a>
                                             <a href="{{ route('admin.course.destroy',$list->id) }}" class="btn btn-danger btn-xs" onclick="return confirm('确定删除该课程？');"><i class="fa fa-trash-o"></i> 删除 </a>
                                         </td>

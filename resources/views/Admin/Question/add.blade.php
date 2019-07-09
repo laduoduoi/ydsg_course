@@ -45,13 +45,6 @@
                                     </div>
                                 </div>
                                 <div class="item form-group">
-                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="video">视频
-                                    </label>
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <input name="video" type="file" >
-                                    </div>
-                                </div>
-                                <div class="item form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="audio">音频
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">

@@ -4,7 +4,7 @@
         <div class="">
             <div class="page-title">
                 <div class="title_left">
-                    <h3>添加广告</h3>
+                    <h3>添加广告banner</h3>
                 </div>
             </div>
             <div class="row">

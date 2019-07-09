@@ -34,6 +34,14 @@ Route::group(['middleware' => 'admin_auth'], function () {
     Route::post('/course/update/{id}','CourseController@update')->name('admin.course.update');
     Route::get('/course/destroy/{id}','CourseController@destroy')->name('admin.course.destroy');
 
+    // 课程背景图片管理
+    Route::get('/courseBackground/list/{id}','CourseBackgroundController@list')->name('admin.background.list');
+    Route::get('/courseBackground/add/{id}','CourseBackgroundController@add')->name('admin.background.add');
+    Route::post('/courseBackground/save','CourseBackgroundController@save')->name('admin.background.save');
+    Route::get('/courseBackground/edit/{id}','CourseBackgroundController@edit')->name('admin.background.edit');
+    Route::post('/courseBackground/update/{id}','CourseBackgroundController@update')->name('admin.background.update');
+    Route::get('/courseBackground/destroy/{id}','CourseBackgroundController@destroy')->name('admin.background.destroy');
+
     // 课程-课时管理
     Route::get('/course/period/list/{id}','CoursePeriodController@list')->name('admin.period.list');
     Route::get('/course/period/add/{id}','CoursePeriodController@add')->name('admin.period.add');

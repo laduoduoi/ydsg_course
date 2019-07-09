@@ -15,4 +15,8 @@ class CoursePeriod extends Model
     {
         return asset($value);
     }
+    public function getAudioAttribute($value)
+    {
+        return asset($value);
+    }
 }

@@ -29,6 +29,11 @@ class CoursePeriodQuestionAnswerController extends Controller
     public function save(Request $request)
     {
         $param = $this->check($request);
+        if ($request->hasFile('cover') && $request->file('cover')->isValid()) {
+            $storage_path = $request->file('cover')->store('public/course/period/cover');
+            $path = str_replace('public/course/period/cover/', '', $storage_path);
+            $param['cover'] = 'storage/course/period/cover/' . $path;
+        }
         CoursePeriodQuestionAnswer::create($param);
 
         return redirect()->route('admin.answer.list', $param['question_id']);
@@ -47,6 +52,11 @@ class CoursePeriodQuestionAnswerController extends Controller
     public function update(Request $request, $id)
     {
         $param = $this->check($request);
+        if ($request->hasFile('cover_edit') && $request->file('cover_edit')->isValid()) {
+            $storage_path = $request->file('cover_edit')->store('public/course/period/cover');
+            $path = str_replace('public/course/period/cover/', '', $storage_path);
+            $param['cover'] = 'storage/course/period/cover/' . $path;
+        }
         $result = CoursePeriodQuestionAnswer::query()->where('id', $id)->update($param);
         abort_if($result === false, 400, '更新失败');
 
@@ -72,8 +82,9 @@ class CoursePeriodQuestionAnswerController extends Controller
             'title.required' => '请填写答案',
             'question_id.required' => '问题ID不正确',
         ]);
-        $param = $this->getReqParams(['title', 'question_id', 'status', 'sort']);
+        $param = $this->getReqParams(['title', 'question_id', 'status', 'sort', 'cover']);
         return $param;
     }
 
 }
+

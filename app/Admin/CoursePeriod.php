@@ -10,7 +10,7 @@ class CoursePeriod extends Model
         'title',
         'cover',
         'video',
-        'summary_video',
+        'audio',
         'lyric',
         'course_id',
         'status',

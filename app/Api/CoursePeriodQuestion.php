@@ -14,4 +14,8 @@ class CoursePeriodQuestion extends Model
     {
         return asset($value);
     }
+    public function getCoverAttribute($value)
+    {
+        return asset($value);
+    }
 }

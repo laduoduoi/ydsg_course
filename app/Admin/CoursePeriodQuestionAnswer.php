@@ -10,7 +10,8 @@ class CoursePeriodQuestionAnswer extends Model
         'title',
         'question_id',
         'status',
-        'sort'
+        'sort',
+        'cover'
     ];
     protected $appends = ['status_title'];
 

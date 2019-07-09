@@ -45,7 +45,7 @@
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <a href="{{asset($info->video)}}" target="_blank">预览视频</a>
-                                        <input name="video" value="{{asset($info->video)}}" type="hidden">
+                                        <input name="video" value="{{$info->video}}" type="hidden">
                                         <input name="video_edit" type="file">
                                     </div>
                                 </div>
