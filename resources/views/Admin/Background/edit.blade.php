@@ -13,11 +13,18 @@
                         <div class="x_content">
                             <form class="form-horizontal form-label-left" action="{{ route('admin.background.update',$info->id) }}" enctype="multipart/form-data" method="post">
                                 <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="sort">排序
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input class="form-control col-md-7 col-xs-12" name="sort" id="sort" value="{{$info->sort}}" required="required" type="text">
+                                    </div>
+                                </div>
+                                <div class="item form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="type">图片
                                     </label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         <img  id="imgHeadPhoto" class="am-img-responsive" src="{{asset($info->cover)}}" alt=""/>
-                                        <input name="cover" type="hidden" value="{{asset($info->cover)}}">
+                                        <input name="cover" type="hidden" value="{{$info->cover}}">
                                         <input name="cover_edit" type="file" onchange="PreviewImage(this,'imgHeadPhoto','divPreview');" >
                                     </div>
                                 </div>

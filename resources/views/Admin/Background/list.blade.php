@@ -20,8 +20,8 @@
                                 <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>图片</th>
                                     <th>排序</th>
+                                    <th>图片</th>
                                     <th>操作</th>
                                 </tr>
                                 </thead>
@@ -29,8 +29,8 @@
                                 @foreach($list as $list)
                                     <tr>
                                         <td>{{$list->id}}</td>
-                                        <td><img class="am-img-thumbnail am-img-bdrs" src="{{asset($list->cover)}}" alt="{{$list->title}}" height="100px"/></td>
                                         <td>{{$list->sort}}</td>
+                                        <td><img class="am-img-thumbnail am-img-bdrs" src="{{asset($list->cover)}}" alt="{{$list->title}}" height="60px"/></td>
                                         <td>
                                             <a href="{{ route('admin.background.edit',$list->id) }}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> 编辑 </a>
                                             <a href="{{ route('admin.background.destroy',$list->id) }}" class="btn btn-danger btn-xs" onclick="return confirm('确定删除该课程背景图？');"><i class="fa fa-trash-o"></i> 删除 </a>

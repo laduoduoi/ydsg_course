@@ -33,8 +33,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/course/period/answer', 'CourseController@submitAnswers');
 
     // 会员中心
-    //关于我们
+    // 关于我们
     Route::get('/user/about', 'UserController@about');
+    // 已学课程
+    Route::get('/user/learned', 'UserController@learned');
+    // 学习报告
+    Route::get('/user/report', 'UserController@report');
 
     //订单列表
     /*Route::any('/order/getlist', 'OrderController@getList');
